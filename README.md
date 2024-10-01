@@ -10,9 +10,10 @@ The crawler begins with a specified origin URL. This URL serves as the entry poi
 2. Fetching the Page
 Using the File_fetcher module, the crawler retrieves the HTML content of the origin page. This is done with a simple command that allows the program to access online or local resources:
 
-'''
+```
 dune exec ./bin/wiki_game.exe -- file-fetcher-demo -resource <origin-url>
-'''
+```
+
 3. Parsing HTML
 Once the page is fetched, the crawler employs the Lambda Soup library to parse the HTML. It identifies key elements, such as links to other Wikipedia articles, by examining the document structure.
 
@@ -50,9 +51,9 @@ Upon reaching the destination page, the crawler outputs the full path taken, dis
 Example Command
 To initiate the crawling process, use the following command:
 
-'''
+```
 dune exec ./bin/wiki_game.exe -- wiki-game find-path -origin <origin-url> -destination <destination-url> -local-with-root resources/
-'''
+```
 Example Output
 The output will display the path traversed, such as:
 
@@ -61,6 +62,7 @@ Cat - Wikipedia
 Carnivore - Wikipedia
 Caniformia - Wikipedia
 Dog - Wikipedia
-Conclusion
+
+# Conclusion
 
 The Wiki Racer Web Crawler efficiently navigates the vast landscape of Wikipedia articles by leveraging web scraping and a breadth-first search algorithm. This allows users to explore connections between topics and understand how knowledge is interlinked across the platform. Happy crawling!
