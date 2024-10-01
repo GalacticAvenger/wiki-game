@@ -6,22 +6,22 @@ The Gomoku bot intelligently navigates a 15x15 Gomoku game by assessing availabl
 
 ## The bot is designed using the following key components:
 
-### Game Representation: The game state is represented as a combination of the current board, player pieces, and available moves. The Game module handles this representation, allowing the bot to query the board's state effectively.
+Game Representation: The game state is represented as a combination of the current board, player pieces, and available moves. The Game module handles this representation, allowing the bot to query the board's state effectively.
 
-### Decision-Making Process: The bot's core decision-making is handled through various functions:
+Decision-Making Process: The bot's core decision-making is handled through various functions:
 Available Moves: The bot queries the board for available positions using the available_moves function, which returns a list of all unoccupied positions on the board.
 
 Winning Moves: Before making a move, the bot checks if it can win immediately using the winning_moves function. This function assesses all available moves and determines which would result in an immediate win.
 
 Losing Moves: Similarly, the bot checks for potential losing moves that would allow the opponent to win on their next turn using the losing_moves function.
 
-### Minimax Algorithm: To enhance its strategy, the bot implements the Minimax algorithm. This algorithm evaluates possible future game states by:
+Minimax Algorithm: To enhance its strategy, the bot implements the Minimax algorithm. This algorithm evaluates possible future game states by:
 
 Scoring current positions based on potential outcomes (win/loss).
 
 Maximizing its own score while minimizing the opponent's score, effectively considering both players' optimal strategies.
 
-### Heuristic Evaluation: For situations where the game doesn't end immediately, the bot uses a heuristic evaluation function to assign scores to non-terminal game states based on the number of consecutive pieces and potential threats from the opponent.
+Heuristic Evaluation: For situations where the game doesn't end immediately, the bot uses a heuristic evaluation function to assign scores to non-terminal game states based on the number of consecutive pieces and potential threats from the opponent.
 
 ## Key Functions
 available_moves: Identifies all empty positions on the board where a player can place their piece.
