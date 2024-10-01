@@ -1,35 +1,66 @@
 # Overview
 
-The Gomoku bot intelligently navigates a 15x15 Gomoku game by assessing available moves, predicting future outcomes, and employing strategic decision-making through the Minimax algorithm. By considering both winning and losing conditions, the bot aims to play optimally against human opponents or other AIs.
+The Wiki Racer Web Crawler is designed to navigate from one Wikipedia URL to another by utilizing a breadth-first search algorithm. It scrapes for Wikipedia links on each page it visits until it reaches the destination page.
 
-# Bot Architecture
+# How It Works
 
-## The bot is designed using the following key components:
+1. Starting Point
+The crawler begins with a specified origin URL. This URL serves as the entry point for the search.
 
-Game Representation: The game state is represented as a combination of the current board, player pieces, and available moves. The Game module handles this representation, allowing the bot to query the board's state effectively.
+2. Fetching the Page
+Using the File_fetcher module, the crawler retrieves the HTML content of the origin page. This is done with a simple command that allows the program to access online or local resources:
 
-Decision-Making Process: The bot's core decision-making is handled through various functions:
-Available Moves: The bot queries the board for available positions using the available_moves function, which returns a list of all unoccupied positions on the board.
+'''
+dune exec ./bin/wiki_game.exe -- file-fetcher-demo -resource <origin-url>
+'''
+3. Parsing HTML
+Once the page is fetched, the crawler employs the Lambda Soup library to parse the HTML. It identifies key elements, such as links to other Wikipedia articles, by examining the document structure.
 
-Winning Moves: Before making a move, the bot checks if it can win immediately using the winning_moves function. This function assesses all available moves and determines which would result in an immediate win.
 
-Losing Moves: Similarly, the bot checks for potential losing moves that would allow the opponent to win on their next turn using the losing_moves function.
+4. Extracting Links
+The crawler specifically looks for links that lead to other Wikipedia articles. The wikipedia_namespace module helps filter out irrelevant links (such as those pointing to external sites or non-article namespaces). The extraction process involves:
 
-Minimax Algorithm: To enhance its strategy, the bot implements the Minimax algorithm. This algorithm evaluates possible future game states by:
+Identifying anchor (<a>) tags.
+Checking the href attribute for links that match the Wikipedia format.
+Storing valid links for further exploration.
 
-Scoring current positions based on potential outcomes (win/loss).
+5. Breadth-First Search Algorithm
+With the links extracted, the crawler implements a breadth-first search (BFS) strategy. This involves:
 
-Maximizing its own score while minimizing the opponent's score, effectively considering both players' optimal strategies.
+Maintaining a queue of URLs to visit, starting with the origin URL.
 
-Heuristic Evaluation: For situations where the game doesn't end immediately, the bot uses a heuristic evaluation function to assign scores to non-terminal game states based on the number of consecutive pieces and potential threats from the opponent.
+Tracking visited URLs to avoid cycles.
 
-## Key Functions
-available_moves: Identifies all empty positions on the board where a player can place their piece.
+Iteratively fetching and parsing each page linked in the current URL until the destination page is found or all options are exhausted.
 
-winning_moves: Returns all positions that, if played, would allow the bot to win on the next turn.
+6. Navigating to the Destination
+As the crawler processes each URL:
 
-losing_moves: Identifies moves that would allow the opponent to win on their next turn.
+It fetches the page content.
 
-evaluate: Evaluates the current state of the game, returning whether it is ongoing, a win for one of the players, or an illegal move.
+Parses the HTML to extract links.
 
-minimax: Implements the Minimax algorithm to look ahead several moves and choose the optimal play based on potential future outcomes.
+Checks if any of the newly found links match the destination URL.
+
+If a match is found, the crawler records the path taken from the origin to the destination.
+
+7. Output
+Upon reaching the destination page, the crawler outputs the full path taken, displaying each Wikipedia article visited along the way. The result provides a clear route through Wikipedia’s interconnected articles.
+
+Example Command
+To initiate the crawling process, use the following command:
+
+'''
+dune exec ./bin/wiki_game.exe -- wiki-game find-path -origin <origin-url> -destination <destination-url> -local-with-root resources/
+'''
+Example Output
+The output will display the path traversed, such as:
+
+Copy code
+Cat - Wikipedia
+Carnivore - Wikipedia
+Caniformia - Wikipedia
+Dog - Wikipedia
+Conclusion
+
+The Wiki Racer Web Crawler efficiently navigates the vast landscape of Wikipedia articles by leveraging web scraping and a breadth-first search algorithm. This allows users to explore connections between topics and understand how knowledge is interlinked across the platform. Happy crawling!
