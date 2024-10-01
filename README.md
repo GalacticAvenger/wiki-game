@@ -57,11 +57,12 @@ dune exec ./bin/wiki_game.exe -- wiki-game find-path -origin <origin-url> -desti
 Example Output
 The output will display the path traversed, such as:
 
-Copy code
+```
 Cat - Wikipedia
 Carnivore - Wikipedia
 Caniformia - Wikipedia
 Dog - Wikipedia
+```
 
 # Conclusion
 
